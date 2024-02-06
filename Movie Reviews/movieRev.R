@@ -1,0 +1,40 @@
+library(rvest)
+library(dplyr)
+library(purrr)
+library(stringr)
+
+
+url <- "https://www.imdb.com/title/tt17351924/reviews/?ref_=tt_ov_rt"
+
+
+webpage <- read_html(url)
+
+
+extract_review_info <- function(review_node) {
+  username <- review_node %>% html_node(".display-name-link") %>% html_text()
+  date <- review_node %>% html_node(".review-date") %>% html_text()
+  stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+  review <- review_node %>% html_node(".text") %>% html_text()
+  
+  return(data.frame(
+    title = c("Saltburn"),
+    username = username,
+    date = date, 
+    stars = as.numeric(stars),
+    content = review
+  ))
+}
+
+
+reviews <- webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info)
+
+
+for (page_num in 2:9) {
+  url <- paste0("https://www.imdb.com/title/tt17351924/reviews/?ref_=tt_ov_rt&page=", page_num)
+  webpage <- read_html(url)
+  reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
+}
+
+
+View(head(reviews, 300))
+
