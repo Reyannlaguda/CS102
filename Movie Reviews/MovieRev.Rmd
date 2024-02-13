@@ -12,7 +12,7 @@ library(purrr)
 library(stringr)
 ```
 
-```{r}
+```{r number1}
 url <- "https://www.imdb.com/title/tt17351924/reviews/?ref_=tt_ov_rt"
 
 
@@ -40,6 +40,339 @@ reviews <- webpage %>% html_nodes(".review-container") %>% map_df(extract_review
 
 for (page_num in 2:9) {
   url <- paste0("https://www.imdb.com/title/tt17351924/reviews/?ref_=tt_ov_rt&page=", page_num)
+  webpage <- read_html(url)
+  reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
+}
+
+
+View(head(reviews, 300))
+```
+
+```{r number2}
+url <- "https://www.imdb.com/title/tt0245429/?ref_=chttp_t_31"
+
+
+webpage <- read_html(url)
+
+
+extract_review_info <- function(review_node) {
+  username <- review_node %>% html_node(".display-name-link") %>% html_text()
+  date <- review_node %>% html_node(".review-date") %>% html_text()
+  stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+  stars_new <- gsub("[^0-9]", "", stars) 
+  review <- review_node %>% html_node(".text") %>% html_text()
+  
+  return(data.frame(
+    title = c("Spirited Away"),
+    username = username,
+    date = date, 
+    stars = as.numeric(stars_new),
+    content = review
+  ))
+}
+
+
+reviews <- webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info)
+
+
+for (page_num in 2:15) {
+  url <- paste0("https://www.imdb.com/title/tt0245429/reviews/?ref_=tt_ov_rt", page_num)
+  webpage <- read_html(url)
+  reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
+}
+
+
+View(head(reviews, 300))
+```
+
+```{r number3}
+url <- "https://imdb.com/title/tt9362722/?ref_=chttp_t_32"
+
+
+webpage <- read_html(url)
+
+
+extract_review_info <- function(review_node) {
+  username <- review_node %>% html_node(".display-name-link") %>% html_text()
+  date <- review_node %>% html_node(".review-date") %>% html_text()
+  stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+  stars_new <- gsub("[^0-9]", "", stars)  
+  review <- review_node %>% html_node(".text") %>% html_text()
+  
+  return(data.frame(
+    title = c("Spider-Man: Across the Spider-Verse"),
+    username = username,
+    date = date, 
+    stars = as.numeric(stars_new),
+    content = review
+  ))
+}
+
+
+reviews <- webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info)
+
+
+for (page_num in 2:15) {
+  url <- paste0("https://www.imdb.com/title/tt9362722/reviews/?ref_=tt_ov_rt", page_num)
+  webpage <- read_html(url)
+  reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
+}
+
+
+View(head(reviews, 300))
+```
+
+```{r number4}
+url <- "https://www.imdb.com/title/tt0253474/?ref_=chttp_t_33"
+
+
+webpage <- read_html(url)
+
+
+extract_review_info <- function(review_node) {
+  username <- review_node %>% html_node(".display-name-link") %>% html_text()
+  date <- review_node %>% html_node(".review-date") %>% html_text()
+  stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+  stars_new <- gsub("[^0-9]", "", stars)  
+  review <- review_node %>% html_node(".text") %>% html_text()
+  
+  return(data.frame(
+    title = c("The Pianist"),
+    username = username,
+    date = date, 
+    stars = as.numeric(stars_new),
+    content = review
+  ))
+}
+
+
+reviews <- webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info)
+
+
+for (page_num in 2:15) {
+  url <- paste0("https://www.imdb.com/title/tt0253474/reviews/?ref_=tt_ov_rt", page_num)
+  webpage <- read_html(url)
+  reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
+}
+
+
+View(head(reviews, 300))
+```
+
+```{r number5}
+url <- "https://www.imdb.com/title/tt6751668/?ref_=chttp_t_34"
+
+
+webpage <- read_html(url)
+
+
+extract_review_info <- function(review_node) {
+  username <- review_node %>% html_node(".display-name-link") %>% html_text()
+  date <- review_node %>% html_node(".review-date") %>% html_text()
+  stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+  stars_new <- gsub("[^0-9]", "", stars)  
+  review <- review_node %>% html_node(".text") %>% html_text()
+  
+  return(data.frame(
+    title = c("Parasite"),
+    username = username,
+    date = date, 
+    stars = as.numeric(stars_new),
+    content = review
+  ))
+}
+
+
+reviews <- webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info)
+
+
+for (page_num in 2:15) {
+  url <- paste0("https://www.imdb.com/title/tt6751668/reviews/?ref_=tt_ov_rt", page_num)
+  webpage <- read_html(url)
+  reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
+}
+
+
+View(head(reviews, 300))
+```
+
+```{r number6}
+url <- "https://www.imdb.com/title/tt0054215/?ref_=chttp_t_35"
+
+
+webpage <- read_html(url)
+
+
+extract_review_info <- function(review_node) {
+  username <- review_node %>% html_node(".display-name-link") %>% html_text()
+  date <- review_node %>% html_node(".review-date") %>% html_text()
+  stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+  stars_new <- gsub("[^0-9]", "", stars)  
+  review <- review_node %>% html_node(".text") %>% html_text()
+  
+  return(data.frame(
+    title = c("Psycho"),
+    username = username,
+    date = date, 
+    stars = as.numeric(stars_new),
+    content = review
+  ))
+}
+
+
+reviews <- webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info)
+
+
+for (page_num in 2:15) {
+  url <- paste0("https://www.imdb.com/title/tt0054215/reviews/?ref_=tt_ov_rt", page_num)
+  webpage <- read_html(url)
+  reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
+}
+
+
+View(head(reviews, 300))
+```
+
+```{r number7}
+url <- "https://www.imdb.com/title/tt0172495/?ref_=chttp_t_36"
+
+
+webpage <- read_html(url)
+
+
+extract_review_info <- function(review_node) {
+  username <- review_node %>% html_node(".display-name-link") %>% html_text()
+  date <- review_node %>% html_node(".review-date") %>% html_text()
+  stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+  stars_new <- gsub("[^0-9]", "", stars)  
+  review <- review_node %>% html_node(".text") %>% html_text()
+  
+  return(data.frame(
+    title = c("Gladiator"),
+    username = username,
+    date = date, 
+    stars = as.numeric(stars_new),
+    content = review
+  ))
+}
+
+
+reviews <- webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info)
+
+
+for (page_num in 2:15) {
+  url <- paste0("https://www.imdb.com/title/tt0172495/reviews/?ref_=tt_ov_rt", page_num)
+  webpage <- read_html(url)
+  reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
+}
+
+
+View(head(reviews, 300))
+```
+
+```{r number8}
+url <- "https://www.imdb.com/title/tt0110357/?ref_=chttp_t_37"
+
+
+webpage <- read_html(url)
+
+
+extract_review_info <- function(review_node) {
+  username <- review_node %>% html_node(".display-name-link") %>% html_text()
+  date <- review_node %>% html_node(".review-date") %>% html_text()
+  stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+  stars_new <- gsub("[^0-9]", "", stars)  
+  review <- review_node %>% html_node(".text") %>% html_text()
+  
+  return(data.frame(
+    title = c("The Lion King"),
+    username = username,
+    date = date, 
+    stars = as.numeric(stars_new),
+    content = review
+  ))
+}
+
+
+reviews <- webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info)
+
+
+for (page_num in 2:15) {
+  url <- paste0("https://www.imdb.com/title/tt0110357/reviews/?ref_=tt_ov_rt", page_num)
+  webpage <- read_html(url)
+  reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
+}
+
+
+View(head(reviews, 300))
+```
+
+```{r number9}
+url <- "https://www.imdb.com/title/tt0110413/?ref_=chttp_t_38"
+
+
+webpage <- read_html(url)
+
+
+extract_review_info <- function(review_node) {
+  username <- review_node %>% html_node(".display-name-link") %>% html_text()
+  date <- review_node %>% html_node(".review-date") %>% html_text()
+  stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+  stars_new <- gsub("[^0-9]", "", stars)  
+  review <- review_node %>% html_node(".text") %>% html_text()
+  
+  return(data.frame(
+    title = c("Léon: The Professional"),
+    username = username,
+    date = date, 
+    stars = as.numeric(stars_new),
+    content = review
+  ))
+}
+
+
+reviews <- webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info)
+
+
+for (page_num in 2:15) {
+  url <- paste0("https://www.imdb.com/title/tt0110413/reviews/?ref_=tt_ov_rt", page_num)
+  webpage <- read_html(url)
+  reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
+}
+
+
+View(head(reviews, 300))
+```
+
+``` {r number10}
+url <- "https://www.imdb.com/title/tt0407887/?ref_=chttp_t_39"
+
+
+webpage <- read_html(url)
+
+
+extract_review_info <- function(review_node) {
+  username <- review_node %>% html_node(".display-name-link") %>% html_text()
+  date <- review_node %>% html_node(".review-date") %>% html_text()
+  stars <- review_node %>% html_node(".rating-other-user-rating") %>% html_text()
+  stars_new <- gsub("[^0-9]", "", stars)  
+  review <- review_node %>% html_node(".text") %>% html_text()
+  
+  return(data.frame(
+    title = c("The Departed"),
+    username = username,
+    date = date, 
+    stars = as.numeric(stars_new),
+    content = review
+  ))
+}
+
+
+reviews <- webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info)
+
+
+for (page_num in 2:15) {
+  url <- paste0("https://www.imdb.com/title/tt0407887/reviews/?ref_=tt_ov_rt", page_num)
   webpage <- read_html(url)
   reviews <- bind_rows(reviews, webpage %>% html_nodes(".review-container") %>% map_df(extract_review_info))
 }
